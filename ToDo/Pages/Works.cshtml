@@ -1,0 +1,49 @@
+﻿@page
+@model ToDo.Pages.WorksModel
+@{
+	ViewData["Title"] = "Work To-Do";
+}
+
+<h3>@ViewData["Title"]</h3>
+<hr />
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th scope="col">Job</th>
+			<th scope="col">Description</th>
+			<th scope="col">Time Created</th>
+			<th scope="col">Last Modified</th>
+			<th scope="col">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var _work in Model.Works)
+		{
+			<tr>
+				<td>@_work.Name</td>
+				<td>@_work.Description</td>
+				<td>@_work.TimeCreated</td>
+				<td>@_work.TimeLastUpdated</td>
+				@if (_work.Finished)
+				{
+					<td>FINISHED</td>
+				}
+				else 
+				{
+					<td>
+						<form asp-page-handler="ClickFinished" method="post">
+							<input type="hidden" name="id" value="@_work.Id" />
+							<button class="btn btn-success">Finish</button>
+						</form>
+					</td>
+				}
+			</tr>
+		}
+	</tbody>
+</table>
+
+<div style="position: fixed; bottom: 70px;right:25px;">
+	<a href="/AddWork" class="btn btn-success">Add New</a>
+</div>
+
